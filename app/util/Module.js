@@ -56,13 +56,29 @@ Ext.define('MoMo.client.util.Module', {
                 }
             });
 
+            // add custom components without having to customize the
+            // XML beans for the different profiles, running manual SQL
+            // insert for already running production systems etc. pp.
+            Ext.each(items, function(item) {
+                if (item.region === 'north') {
+                    me.addCustomNorthPanelItems(item);
+                } else if (item.region === 'east') {
+                    me.addCustomEastPanelItems(item);
+                } else if (item.region === 'south') {
+                    me.addCustomSouthPanelItems(item);
+                } else if (item.region === 'west') {
+                    me.addCustomWestPanelItems(item);
+                } else if (item.region === 'center') {
+                    me.addCustomCenterPanelItems(item);
+                }
+            });
+
             // create the viewport
             Ext.define(viewportName + '.override', {
                 override: viewportName,
                 layout: appViewportType,
                 items: items
             });
-
         },
 
         /**
@@ -187,6 +203,74 @@ Ext.define('MoMo.client.util.Module', {
                             'set the recommended value ' + prop);
                 }
             });
-        }
+        },
+
+        /**
+         *
+         */
+        addCustomNorthPanelItems: function(cmp) {
+            cmp.items.push({
+                xtype: 'basigx-button-help',
+                getHelpFromComponent: true,
+                cls: 'helpbtn',
+                viewModel: {
+                    data: {
+                        tooltip: 'Hilfe2',
+                        text: null,
+                    }
+                },
+                additonalHelpKeys: [
+                    /* the north panel */
+                    'momo-login-logout-button',
+                    'momo-translation-en-button',
+                    'momo-translation-de-button',
+                    'momo-translation-mn-button',
+                    'momo-list-documents-button',
+                    'momo-form-field-multisearch',
+                    /* the center panel */
+                    'momo-component-map',
+                    'momo-button-stepback',
+                    'momo-button-stepforward',
+                    'momo-button-print',
+                    'momo-button-showworkstatetoolspanel',
+                    'momo-button-showmetapanel',
+                    'momo-button-showmeasuretoolspanel',
+                    'momo-button-showredliningtoolspanel',
+                    'momo-button-zoomtoextent',
+                    'momo-button-addwms',
+                    'momo-combo-scale',
+                    /* the west panel */
+                    'momo-panel-legendtree'
+                ]
+            })
+        },
+
+        /**
+         *
+         */
+        addCustomEastPanelItems: function(cmp) {
+
+        },
+
+        /**
+         *
+         */
+        addCustomSouthPanelItems: function(cmp) {
+
+        },
+
+        /**
+         *
+         */
+        addCustomWestPanelItems: function(cmp) {
+
+        },
+
+        /**
+         *
+         */
+        addCustomCenterPanelItems: function(cmp) {
+
+        },
     }
 });
